@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    {%    include 'navbar.html'   %}
+    <h1>Admin Dashboard</h1>
+    
+    <h2>Upload Product</h2>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="text" name="product_name" placeholder="Product Name" required>
+        <textarea name="product_desc" placeholder="Description" required></textarea>
+        <input type="number" name="product_cost" placeholder="Cost" required>
+        <select name="product_category" required>
+            <option value="cups">Cups</option>
+            <option value="plates">Plates</option>
+            <option value="hotpots">Hotpots</option>
+            <option value="glasses">Glasses</option>
+        </select>
+        <input type="file" name="product_image_name" required>
+        <input type="submit" class="btn btn-primary" value="upload/add products">
+
+    </form>
+
+    <h2>Upload Decor</h2>
+    <form action="/uploaddecor" method="POST" enctype="multipart/form-data">
+        <input type="text" name="product_name" placeholder="Decor Name" required>
+        <textarea name="product_desc" placeholder="Description" required></textarea>
+        <input type="number" name="product_cost" placeholder="Cost" required>
+        <select name="product_category" required>
+            <option value="curtains">Curtains</option>
+            <option value="carpets">Carpets</option>
+            <option value="doormats">Doormats</option>
+            <option value="flowervest">Flower Vest</option>
+            <option value="frames">Frames</option>
+        </select>
+        <input type="file" name="product_image_name" required>
+        <button type="submit">Upload Decor</button>
+    </form>
+</body>
+</html>

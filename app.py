@@ -194,6 +194,30 @@ def register():
     else:
      return render_template("register.html", error = "please enter correct details ")
 
+@app.route("/admin")
+def admin():
+    # Check if the user is logged in
+    if 'key' not in session:
+        return redirect("/login")  # Redirect to login if not logged in
+
+    email = session['key']  # Retrieve the logged-in user's email from the session
+
+    # Connect to the database
+    connection = pymysql.connect(host='localhost', user='root', password='', database='smart')
+    cursor = connection.cursor()
+
+    # Query to check the user's role
+    sql = "SELECT role FROM users WHERE email = %s"
+    cursor.execute(sql, (email,))
+    result = cursor.fetchone()  # Fetch the result from the query
+
+    connection.close()  # Close the database connection
+
+    # Check if the user has the 'admin' role
+    if result and result[0] == 'admin':
+        return render_template("admin.html")  # Allow access to the admin page
+    else:
+        return redirect("/")  # Redirect non-admin users to the homepage (or another page)
 
 @app.route("/login", methods=['POST','GET'])
 def Login():
@@ -239,6 +263,7 @@ def mpesa():
 
    return'<h1>Please complete payment in your form</h1>'\
    '<a href="/" class="btn btn-dark btn-sm">GO back to products </a>'
+
 @app.route("/logout")
 def Logout():
     session.clear()
