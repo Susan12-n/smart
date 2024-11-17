@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deleted Products</title>
+</head>
+<body>
+    <h1>Deleted Products</h1>
+    <ul>
+        {% for product in products %}
+        <li>
+            {{ product.name }} - ${{ product.price }}
+            <a href="{{ url_for('restore_product', product_id=product.id) }}">Restore</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('view_products') }}">Back to Products</a>
+</body>
+</html>

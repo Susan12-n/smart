@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - View Purchases</title>
+</head>
+<body>
+    <h1>Purchase Details</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Product Name</th>
+                <th>Product Cost</th>
+                <th>Mpesa Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purchase in purchases %}
+                <tr>
+                    <td>{{ purchase.username }}</td>
+                    <td>{{ purchase.email }}</td>
+                    <td>{{ purchase.product_name }}</td>
+                    <td>{{ purchase.product_cost }}</td>
+                    <td>{{ purchase.mpesa_number }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

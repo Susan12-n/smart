@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+      /* Sidebar */
+#sidebar-wrapper {
+    width: 450px;
+    height: 900px;
+
+}
+
+#sidebar-wrapper .list-group-item {
+    padding: 20px 15px;
+    border: none;
+}
+
+#sidebar-wrapper .sidebar-heading {
+    padding: 20px;
+    font-size: 1.5rem;
+    background-color: #343a40;
+}
+
+#page-content-wrapper {
+    margin-left: 250px;
+}
+
+/* Cards */
+.card {
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    background-color: #f4f5f7;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card .card-body {
+    text-align: center;
+}
+
+.card h3 {
+    color: #333;
+}
+
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="d-flex" id="wrapper">
+    <div class="bg-dark text-white" id="sidebar-wrapper">
+        <div class="sidebar-heading">SMART STORES</div>
+        <div class="list-group list-group-flush">
+            <a href="/" class="list-group-item list-group-item-action bg-dark text-white">Home</a>
+            <a href="/upload" class="list-group-item list-group-item-action bg-dark text-white">Upload</a>
+            <a href="/uploaddecor" class="list-group-item list-group-item-action bg-dark text-white">upload decor</a>
+            <!-- <a href="/add_product" class="list-group-item list-group-item-action bg-dark text-white">Add product</a> -->
+            <a href="view_products" class="list-group-item list-group-item-action bg-dark text-white">view products</a>
+            <a href="/view_purchases" class="list-group-item list-group-item-action bg-dark text-white">View purchases</a>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper" class="w-100">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Admin Dashboard</a>
+        </nav>
+
+        <div class="container-fluid">
+            <div class="row mt-4">
+                <!-- Cards Section -->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title">Sales</p>
+                            <h3>49/50</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title">Stock</p>
+                            <h3>245</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title">Users</p>
+                            <h3>1075</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title">Reports</p>
+                            <h3>245</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <p class="text-center">&copy; All rights Reserved|<b>Privacy Policy</b></p>
+   <p class="text-center">Developed by <span  style="color: blue;">Ngesa Susan</span></p>
+    
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

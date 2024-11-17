@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">SMART STORES</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/decor">decor</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="/upload">Upload</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/uploaddecor">Upload Decor</a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link" href="/admin">Dashboard</a>
+          </li>
+        </ul>
+        <form action="{{ url_for('search') }}" method="POST">
+          <input type="text" name="search_query" placeholder="Search for products..." required>
+          <button type="submit">Search</button>
+      </form>
+      
+          <!-- check if section key exits  -->
+          <!-- if it exits the user should not see the login and register button  -->
+          <!-- user is supposed to see their email and a logout button  -->
+          {%  if  session['key']  %}
+          <!-- user exits  -->
+                <b class="text-info"> log in: {{ session ['key']}}</b>
+                <a href="/logout" class="btn btn-outline -info">Logout</a>
+          {%  else  %}
+          <!-- user does not exits  -->
+               <a class="btn-outline-info" href="/login">Login</a>
+               <a class="btn-primary" href="/register">Register</a>
+          {%  endif %}
+          
+
+        </form>
+      </div>
+    </div>
+  </nav>
+
+
+ 

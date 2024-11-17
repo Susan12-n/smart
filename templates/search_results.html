@@ -1,0 +1,28 @@
+<!-- templates/search_results.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results for "{{ query }}"</h1>
+    
+    {% if results %}
+        <ul>
+            {% for product in results %}
+                <li>
+                    <img src="{{ url_for('static', filename='images/' + product[5]) }}" alt="{{ product[1] }}" style="width: 150px; height: auto;">
+                    <strong>{{ product[1] }}</strong> <!-- Product name -->
+                    <p>{{ product[2] }}</p> <!-- Product description -->
+                    <p>Price: ${{ product[3] }}</p> <!-- Product cost -->
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No products found for "{{ query }}"</p>
+    {% endif %}
+
+    <a href="{{ url_for('Homepage') }}">Back to Home</a>
+</body>
+</html>

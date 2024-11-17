@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category.title() }} Items</title>
+    <!-- Include your CSS files --><link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/lightslider.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <!-- JS Supporting Files -->
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/jquery.js"></script>
+    <script src="../static/js/lightslider.js"></script>
+    <script src="../static/js/script.js"></script>
+
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Navbar -->
+        {% include 'navbar.html' %}
+        
+        <h2 class="text-center">{{ category.title() }} Items</h2>
+        
+        <section class="slider p-4">
+            <ul class="cs-hidden autoWidth">
+                {% for product in products %}
+                <li>
+                    <div class="box">
+                        <div class="slide-img">
+                            <img src="../static/images/{{ product[5] }}" alt="{{ product[1] }}" width="50" height="50">
+                            <div class="overlay">
+                                <a href="/single/{{ product[0] }}" class="buy-btn">Buy now</a>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            {{ product[1] }} <br><br>
+                            <b class="text-warning"> KES{{ product[3] }}</b>
+                        </div>
+                    </div>    
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <!-- Footer -->
+        {% include 'footer.html' %}
+    </div>
+</body>
+</html>
