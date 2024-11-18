@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2>Product Sales Chart</h2>
+    <canvas id="productSalesChart" width="400" height="300" style="background-color: lightgray;"></canvas>
+
+    <script>
+        window.addEventListener("load", function() {
+            console.log("Initializing Chart");
+
+            const productLabels = ['Product 1', 'Product 2', 'Product 3', 'Product 4', 'Product 5'];
+            const salesData = [12, 19, 3, 5, 2];
+
+            const ctx = document.getElementById('productSalesChart').getContext('2d');
+            const productSalesChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: productLabels,
+                    datasets: [{
+                        label: 'Sales',
+                        data: salesData,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

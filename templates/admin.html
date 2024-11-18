@@ -6,17 +6,17 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>
     <style>
-      /* Sidebar */
+        /* Sidebar */
 #sidebar-wrapper {
     width: 450px;
-    height: 900px;
-
 }
 
 #sidebar-wrapper .list-group-item {
     padding: 20px 15px;
     border: none;
+    margin: 2px;
 }
 
 #sidebar-wrapper .sidebar-heading {
@@ -26,7 +26,7 @@
 }
 
 #page-content-wrapper {
-    margin-left: 250px;
+    margin-left: 180px;
 }
 
 /* Cards */
@@ -46,20 +46,23 @@
 }
 
     </style>
+
 </head>
 <body>
 
 <!-- Sidebar -->
 <div class="d-flex" id="wrapper">
-    <div class="bg-dark text-white" id="sidebar-wrapper">
+    <div class="text-white" id="sidebar-wrapper">
         <div class="sidebar-heading">SMART STORES</div>
         <div class="list-group list-group-flush">
             <a href="/" class="list-group-item list-group-item-action bg-dark text-white">Home</a>
             <a href="/upload" class="list-group-item list-group-item-action bg-dark text-white">Upload</a>
             <a href="/uploaddecor" class="list-group-item list-group-item-action bg-dark text-white">upload decor</a>
-            <!-- <a href="/add_product" class="list-group-item list-group-item-action bg-dark text-white">Add product</a> -->
-            <a href="view_products" class="list-group-item list-group-item-action bg-dark text-white">view products</a>
+            <a href="/view_products" class="list-group-item list-group-item-action bg-dark text-white">view products</a>
+            <a href="/view_users" class="list-group-item list-group-item-action bg-dark text-white">view Users</a>
             <a href="/view_purchases" class="list-group-item list-group-item-action bg-dark text-white">View purchases</a>
+            <a href="/logout" class="list-group-item list-group-item-action bg-dark text-white">Admin logout</a>
+
         </div>
     </div>
 
@@ -72,7 +75,7 @@
         <div class="container-fluid">
             <div class="row mt-4">
                 <!-- Cards Section -->
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
                             <p class="card-title">Sales</p>
@@ -80,43 +83,82 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                
+                <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
                             <p class="card-title">Stock</p>
-                            <h3>245</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="card-title">Users</p>
                             <h3>1075</h3>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
-                            <p class="card-title">Reports</p>
+                            <p class="card-title">Users</p>
                             <h3>245</h3>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Chart Section -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Products vs. Sales</h5>
+                            <canvas id="productSalesChart" width="400" height="300"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
+
 <footer>
-    <p class="text-center">&copy; All rights Reserved|<b>Privacy Policy</b></p>
-   <p class="text-center">Developed by <span  style="color: blue;">Ngesa Susan</span></p>
-    
+    <p class="text-center">&copy; All rights Reserved | <b>Privacy Policy</b></p>
+    <p class="text-center">Developed by <span style="color: blue;">Ngesa Susan</span></p>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Chart.js code -->
+<script>
+    window.onload = function() {
+        const productLabels = ['Product 1', 'Product 2', 'Product 3', 'Product 4', 'Product 5'];
+        const salesData = [12, 19, 3, 5, 2]; // Replace with actual sales data
+
+        const ctx = document.getElementById('productSalesChart').getContext('2d');
+        const productSalesChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: productLabels,
+                datasets: [{
+                    label: 'Sales',
+                    data: salesData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+</script>
+
 
 </body>
 </html>

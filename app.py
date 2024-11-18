@@ -460,7 +460,51 @@ def view_purchases():
     return render_template('view_purchases.html', purchases=purchases)
 
 
+@app.route('/view_users')
+def view_users():
+    page = request.args.get('page', 1, type=int)
+    per_page = 10  # Number of users per page
+    offset = (page - 1) * per_page
 
+    connection = pymysql.connect(host='localhost',
+                                user='root', password='',
+                                cursorclass=pymysql.cursors.DictCursor ,
+                                database='smart')
+
+    with connection.cursor() as cursor:
+        # Fetch users with pagination, including id, username, email, and phone
+        cursor.execute("SELECT id, username, email, phone FROM users LIMIT %s OFFSET %s", (per_page, offset))
+        users = cursor.fetchall()
+
+        # Get total user count for pagination calculation
+        cursor.execute("SELECT COUNT(*) AS total FROM users")
+        total_users = cursor.fetchone()['total']
+    connection.close()
+
+    # Calculate total pages
+    total_pages = (total_users + per_page - 1) // per_page
+
+    # Render the view_users template
+    return render_template('view_users.html', users=users, page=page, total_pages=total_pages)
+
+
+@app.route('/delete_user/<int:user_id>', methods=['POST'])
+def delete_user(user_id):
+    connection=pymysql.connect(host='localhost',user='root',password='',database='smart')
+
+    try:
+        with connection.cursor() as cursor:
+            # Delete the user with the specified ID
+            cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
+            connection.commit()
+            flash("User has been successfully deleted.", "success")
+    except pymysql.MySQLError as e:
+        print(f"Error: {e}")
+        flash("An error occurred while trying to delete the user.", "error")
+    finally:
+        connection.close()
+    
+    return redirect(url_for('view_users'))
 
 
 

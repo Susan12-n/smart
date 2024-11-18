@@ -6,13 +6,13 @@
     <title>Search Results</title>
 </head>
 <body>
-    <h1>Search Results for "{{ query }}"</h1>
+    <!-- <h1>Search Results for "{{ query }}"</h1>  -->
     
     {% if results %}
         <ul>
             {% for product in results %}
                 <li>
-                    <img src="{{ url_for('static', filename='images/' + product[5]) }}" alt="{{ product[1] }}" style="width: 150px; height: auto;">
+                    <img src="{{ url_for('static', filename='images/' + product[5]) }}" alt="{{ product[1] }}" style="width: 550px; height: auto;"> <br><br>
                     <strong>{{ product[1] }}</strong> <!-- Product name -->
                     <p>{{ product[2] }}</p> <!-- Product description -->
                     <p>Price: ${{ product[3] }}</p> <!-- Product cost -->
@@ -23,6 +23,6 @@
         <p>No products found for "{{ query }}"</p>
     {% endif %}
 
-    <a href="{{ url_for('Homepage') }}">Back to Home</a>
+    <a href="{{ url_for('Homepage') }}"><button  style="background-color: royalblue; color: white; width: 70px; padding: 5px;">Back</button> </a>
 </body>
 </html>
