@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2024 at 10:09 AM
+-- Generation Time: Nov 21, 2024 at 08:32 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -140,7 +140,8 @@ CREATE TABLE `sales` (
 --
 
 INSERT INTO `sales` (`sale_id`, `product_name`, `quantity`, `sale_date`, `total_amount`) VALUES
-(1, 'glass tumbler', 5, '2024-11-19 00:00:00', 75.00);
+(1, 'glass tumbler', 5, '2024-11-19 00:00:00', 75.00),
+(2, 'Glass Tumbler', 5, '2024-11-20 00:00:00', 75.00);
 
 -- --------------------------------------------------------
 
@@ -220,13 +221,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `purchases`
 --
 ALTER TABLE `purchases`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `sale_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `sale_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
