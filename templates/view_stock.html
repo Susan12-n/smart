@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Overview</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-left: 50px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .out-of-stock {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stock Overview</h1>
+
+        <!-- Group products by category -->
+        {% set current_category = None %}
+        {% for product in products %}
+            {% if current_category != product.product_category %}
+                {% if not loop.first %}
+                    </tbody>
+                    </table>
+                {% endif %}
+                
+                <!-- New category header -->
+                <h2>{{ product.product_category }}</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Product Name</th>
+                            <th>Stock Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                {% set current_category = product.product_category %}
+            {% endif %}
+            
+            <!-- Product row -->
+            <tr>
+                <td>{{ product.product_id }}</td>
+                <td>{{ product.product_name }}</td>
+                <td>
+                    {% if product.stock_quantity > 0 %}
+                        {{ product.stock_quantity }}
+                    {% else %}
+                        <span class="out-of-stock">Out of Stock</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    </div>
+</body>
+</html>

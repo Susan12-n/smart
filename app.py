@@ -507,6 +507,64 @@ def delete_user(user_id):
     return redirect(url_for('view_users'))
 
 
+@app.route('/daily_sales')
+def daily_sales():
+    connection=pymysql.connect(host='localhost',user='root',password='',database='smart')
+
+    current_date = datetime.now().date()  # Get today's date
+
+    try:
+        with connection.cursor() as cursor:
+            # Query to fetch sales for the current day
+            cursor.execute("""
+                SELECT sale_id, product_name, quantity, sale_date, total_amount 
+                FROM sales 
+                WHERE DATE(sale_date) = %s
+                """, (current_date,))
+            daily_sales = cursor.fetchall()
+    except pymysql.MySQLError as e:
+        print(f"Error: {e}")
+        daily_sales = []
+    finally:
+        connection.close()
+
+    return render_template('daily_sales.html', daily_sales=daily_sales, current_date=current_date)
+
+
+
+@app.route('/view_stock')
+def view_stock():
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='smart',
+        cursorclass=pymysql.cursors.DictCursor
+    )
+
+    
+    try:
+        with connection.cursor() as cursor:
+            # Query to get all products with stock information by category
+            cursor.execute("""
+                SELECT product_id, product_name, product_category, stock_quantity 
+                FROM products
+                ORDER BY product_category, product_name
+            """)
+            products = cursor.fetchall()
+    except pymysql.MySQLError as e:
+        print(f"Error: {e}")
+        products = []
+    finally:
+        connection.close()
+
+    return render_template('view_stock.html', products=products)
+
+
+@app.route('/monthly_sales')
+def monthly_sales():
+    return render_template('monthly_sales.html')
+
 
 @app.route("/logout")
 def Logout():
