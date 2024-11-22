@@ -158,7 +158,7 @@ def decor():
 
 #  fetch  all the phones rows
 
-    curtains=cursor.fetchall()Y
+    curtains=cursor.fetchall()
 # fetch all monitors 
     carpets=cursor1.fetchall()
     doormats=cursor2.fetchall()
