@@ -413,7 +413,7 @@ def view_products():
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-    
+     cursorclass=pymysql.cursors.DictCursor 
      )
 
     with connection.cursor() as cursor:
@@ -441,7 +441,7 @@ def delete_product(product_id):
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-    
+     cursorclass=pymysql.cursors.DictCursor 
      )
 
     with connection.cursor() as cursor:
@@ -471,7 +471,7 @@ def restore_product(product_id):
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-    
+     cursorclass=pymysql.cursors.DictCursor 
      )
 
     with connection.cursor() as cursor:
@@ -538,7 +538,7 @@ def view_users():
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-    
+     cursorclass=pymysql.cursors.DictCursor 
      )
 
     with connection.cursor() as cursor:
@@ -621,7 +621,7 @@ def view_stock():
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-    
+     cursorclass=pymysql.cursors.DictCursor 
      )
 
     
