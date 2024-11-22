@@ -2,7 +2,7 @@ from flask import*
 import pymysql
 from functions import *
 from mpesa import *
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_DB_PASSWORD_hash
 import os
 from datetime import datetime
 
@@ -25,10 +25,10 @@ def Homepage():
 #    connect to DB 
 
  connection=pymysql.connect(
-     host=os.getenv("DB_HOST"),
-     user=os.getenv("DB_USER"),
-     password=os.getenv("DB_PASSWORD"),
-     database=os.getenv("DB_NAME"))
+     DB_HOST=os.getenv("DB_DB_HOST"),
+     DB_USER=os.getenv("DB_DB_USER"),
+     DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),
+    DB_NAME=os.getenv("DB_NAME"))
  
  sql="select * from products WHERE product_category = 'cups' "
  sql1="select * from products WHERE product_category = 'plates' "
@@ -65,7 +65,7 @@ def Homepage():
 @app.route("/single/<product_id>")
 def singleitem(product_id):
     # connection to db 
-     connection=pymysql.connect(host=os.getenv("DB_HOST"),user=os.getenv("DB_USER"),password=os.getenv("DB_PASSWORD"),database=os.getenv("DB_NAME"))
+     connection=pymysql.connect(DB_HOST=os.getenv("DB_DB_HOST"),DB_USER=os.getenv("DB_DB_USER"),DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),database=os.getenv("DB_NAME"))
 # create sql query 
      sql= " select * from products where product_id = %s "
     #  create a cursor 
@@ -89,7 +89,7 @@ def Upload():
 
         # connection to db 
 
-        connection=pymysql.connect(host=os.getenv("DB_HOST"),user=os.getenv("DB_USER"),password=os.getenv("DB_PASSWORD"),database=os.getenv("DB_NAME"))
+        connection=pymysql.connect(DB_HOST=os.getenv("DB_DB_HOST"),DB_USER=os.getenv("DB_DB_USER"),DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),database=os.getenv("DB_NAME"))
         cursor=connection.cursor()
 
         sql= "insert into products (product_name, product_desc, product_cost, product_category, product_image_name) values(%s,%s,%s,%s,%s)"
@@ -109,7 +109,7 @@ def Upload():
 # fashion route-helps you nto see all the fashion 
 @app.route("/decor")
 def decor():
-    connection=pymysql.connect(host=os.getenv("DB_HOST"),user=os.getenv("DB_USER"),password=os.getenv("DB_PASSWORD"),database=os.getenv("DB_NAME"))
+    connection=pymysql.connect(DB_HOST=os.getenv("DB_DB_HOST"),DB_USER=os.getenv("DB_DB_USER"),DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),database=os.getenv("DB_NAME"))
     sql="select * from products WHERE product_category = 'curtains' "
     sql1="select * from products WHERE product_category = 'carpets' "
     sql2="select * from products WHERE product_category ='doormats' "
@@ -161,7 +161,7 @@ def Uploaddecor():
 
         # connection to db 
 
-        connection=pymysql.connect(host=os.getenv("DB_HOST"),user=os.getenv("DB_USER"),password=os.getenv("DB_PASSWORD"),database=os.getenv("DB_NAME"))
+        connection=pymysql.connect(DB_HOST=os.getenv("DB_DB_HOST"),DB_USER=os.getenv("DB_DB_USER"),DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),database=os.getenv("DB_NAME"))
         cursor=connection.cursor()
 
         sql= "insert into products (product_name, product_desc, product_cost, product_category, product_image_name) values(%s,%s,%s,%s,%s)"
@@ -186,30 +186,30 @@ def About():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        username = request.form['username']
+        DB_USERname = request.form['DB_USERname']
         email = request.form['email']
         gender = request.form['gender']
         phone = request.form['phone']
-        password = request.form['password']
+        DB_PASSWORD = request.form['DB_PASSWORD']
         
-        # Hash the password for security
-        hashed_password = generate_password_hash(password)
+        # Hash the DB_PASSWORD for security
+        hashed_DB_PASSWORD = generate_DB_PASSWORD_hash(DB_PASSWORD)
 
-        # Database connection
-        connection = pymysql.connect(host=os.getenv("DB_HOST"), user=os.getenv("DB_USER"), password=os.getenv("DB_PASSWORD"), database=os.getenv("DB_NAME"))
+        #DB_NAME connection
+        connection = pymysql.connect(DB_HOST=os.getenv("DB_DB_HOST"), DB_USER=os.getenv("DB_DB_USER"), DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),DB_NAME=os.getenv("DB_NAME"))
 
         cursor = connection.cursor()
 
         # Check if email already exists
-        cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+        cursor.execute("SELECT * FROM DB_USERs WHERE email = %s", (email,))
         existing_email = cursor.fetchone()
         
         if existing_email:
             return render_template("register.html", error="Email is already in use. Please use a different email.")
 
-        # Insert new user record
-        sql = "INSERT INTO users (username, email, gender, phone, password) VALUES (%s, %s, %s, %s, %s)"
-        data = (username, email, gender, phone, hashed_password)
+        # Insert new DB_USER record
+        sql = "INSERT INTO DB_USERs (DB_USERname, email, gender, phone, DB_PASSWORD) VALUES (%s, %s, %s, %s, %s)"
+        data = (DB_USERname, email, gender, phone, hashed_DB_PASSWORD)
 
         # Execute and commit changes
         cursor.execute(sql, data)
@@ -220,51 +220,51 @@ def register():
     return render_template("register.html")
 @app.route("/admin")
 def admin():
-    # Check if the user is logged in
+    # Check if the DB_USER is logged in
     if 'key' not in session:
         return redirect("/login")  # Redirect to login if not logged in
 
-    email = session['key']  # Retrieve the logged-in user's email from the session
+    email = session['key']  # Retrieve the logged-in DB_USER's email from the session
 
-    # Connect to the database
-    connection = pymysql.connect(host=os.getenv("DB_HOST"), user=os.getenv("DB_USER"), password=os.getenv("DB_PASSWORD"), database=os.getenv("DB_NAME"))
+    # Connect to theDB_NAME
+    connection = pymysql.connect(DB_HOST=os.getenv("DB_DB_HOST"), DB_USER=os.getenv("DB_DB_USER"), DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),DB_NAME=os.getenv("DB_NAME"))
     cursor = connection.cursor()
 
-    # Query to check the user's role
-    sql = "SELECT role FROM users WHERE email = %s"
+    # Query to check the DB_USER's role
+    sql = "SELECT role FROM DB_USERs WHERE email = %s"
     cursor.execute(sql, (email,))
     result = cursor.fetchone()  # Fetch the result from the query
 
-    connection.close()  # Close the database connection
+    connection.close()  # Close theDB_NAME connection
 
-    # Check if the user has the 'admin' role
+    # Check if the DB_USER has the 'admin' role
     if result and result[0] == 'admin':
         return render_template("admin.html")  # Allow access to the admin page
     else:
-        return redirect("/")  # Redirect non-admin users to the homepage (or another page)
+        return redirect("/")  # Redirect non-admin DB_USERs to the homepage (or another page)
 
 @app.route("/login", methods=['POST','GET'])
 def Login():
     if request.method == 'POST':
         email = request.form['email']
-        password = request.form['password']
+        DB_PASSWORD = request.form['DB_PASSWORD']
     
        
        # connection to db 
 
-        connection=pymysql.connect(host=os.getenv("DB_HOST"),user=os.getenv("DB_USER"),password=os.getenv("DB_PASSWORD"),database=os.getenv("DB_NAME"))
+        connection=pymysql.connect(DB_HOST=os.getenv("DB_DB_HOST"),DB_USER=os.getenv("DB_DB_USER"),DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),database=os.getenv("DB_NAME"))
         cursor=connection.cursor()
-#  check if user with email exist in the db 
-        sql= "select * from users where email= %s and password = %s"
+#  check if DB_USER with email exist in the db 
+        sql= "select * from DB_USERs where email= %s and DB_PASSWORD = %s"
     
-        data = (email,password)
+        data = (email,DB_PASSWORD)
 
 
         # execute
         cursor.execute(sql,data)
         # save the changes 
         if cursor.rowcount == 0:
-            # it means if the username and password not found 
+            # it means if the DB_USERname and DB_PASSWORD not found 
 
             return render_template("login.html", error= " invalid login credatials ")
 
@@ -291,9 +291,9 @@ def mpesa():
    '<a href="/" class="btn btn-dark btn-sm">GO back to products </a>'
 
 def get_products_by_category(category):
-    """Retrieve products from the database based on the specified category."""
-    # Connect to the MySQL database
-    connection = pymysql.connect(host=os.getenv("DB_HOST"), user=os.getenv("DB_USER"), password=os.getenv("DB_PASSWORD"), database=os.getenv("DB_NAME"))
+    """Retrieve products from theDB_NAME based on the specified category."""
+    # Connect to the MySQLDB_NAME
+    connection = pymysql.connect(DB_HOST=os.getenv("DB_DB_HOST"), DB_USER=os.getenv("DB_DB_USER"), DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),DB_NAME=os.getenv("DB_NAME"))
     
     try:
         with connection.cursor() as cursor:
@@ -312,7 +312,7 @@ def get_products_by_category(category):
 # Flask route for the see_more page
 @app.route('/see_more/<category>')
 def see_more(category):
-    # Retrieve all products in the specified category from the database
+    # Retrieve all products in the specified category from theDB_NAME
     products = get_products_by_category(category)
     
     # Render the see_more template with the category and products data
@@ -324,7 +324,7 @@ def see_more(category):
 @app.route("/search", methods=["POST"])
 def search():
     search_query = request.form.get("search_query").strip()
-    connection = pymysql.connect(host=os.getenv("DB_HOST"), user=os.getenv("DB_USER"), password=os.getenv("DB_PASSWORD"), database=os.getenv("DB_NAME"))
+    connection = pymysql.connect(DB_HOST=os.getenv("DB_DB_HOST"), DB_USER=os.getenv("DB_DB_USER"), DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),DB_NAME=os.getenv("DB_NAME"))
     
     try:
         cursor = connection.cursor()
@@ -338,7 +338,7 @@ def search():
         results = cursor.fetchall()
         
         # Print the structure of results to debug
-        print("DEBUG: Results fetched from database:", results)
+        print("DEBUG: Results fetched fromDB_NAME:", results)
     finally:
         connection.close()
     
@@ -353,10 +353,10 @@ def search():
 @app.route('/view_products')
 def view_products():
     connection = pymysql.connect(
-        host=os.getenv("DB_HOST"),
-        user=os.getenv("DB_USER"),
-        password='',
-        database=os.getenv("DB_NAME"),
+        DB_HOST=os.getenv("DB_DB_HOST"),
+        DB_USER=os.getenv("DB_DB_USER"),
+        DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),
+       DB_NAME=os.getenv("DB_NAME"),
         cursorclass=pymysql.cursors.DictCursor
     )
 
@@ -381,10 +381,10 @@ def view_products():
 @app.route('/delete/<int:product_id>', methods=['POST'])
 def delete_product(product_id):
     connection = pymysql.connect(
-        host=os.getenv("DB_HOST"),
-        user=os.getenv("DB_USER"),
-        password='',
-        database=os.getenv("DB_NAME"),
+        DB_HOST=os.getenv("DB_DB_HOST"),
+        DB_USER=os.getenv("DB_DB_USER"),
+        DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),
+       DB_NAME=os.getenv("DB_NAME"),
         cursorclass=pymysql.cursors.DictCursor
     )
 
@@ -411,10 +411,10 @@ def delete_product(product_id):
 @app.route('/restore/<int:product_id>', methods=['GET', 'POST'])
 def restore_product(product_id):
     connection = pymysql.connect(
-        host=os.getenv("DB_HOST"),
-        user=os.getenv("DB_USER"),
-        password='',
-        database=os.getenv("DB_NAME"),
+        DB_HOST=os.getenv("DB_DB_HOST"),
+        DB_USER=os.getenv("DB_DB_USER"),
+        DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),
+       DB_NAME=os.getenv("DB_NAME"),
         cursorclass=pymysql.cursors.DictCursor
     )
 
@@ -445,16 +445,16 @@ def restore_product(product_id):
 
 @app.route('/view_purchases')
 def view_purchases():
-    connection=pymysql.connect(host=os.getenv("DB_HOST"),user=os.getenv("DB_USER"),password=os.getenv("DB_PASSWORD"),database=os.getenv("DB_NAME"))
+    connection=pymysql.connect(DB_HOST=os.getenv("DB_DB_HOST"),DB_USER=os.getenv("DB_DB_USER"),DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),database=os.getenv("DB_NAME"))
 
     with connection.cursor() as cursor:
         # SQL query to fetch purchase details
         query = """
-            SELECT username AS user_name,email AS user_email,
+            SELECT DB_USERname AS DB_USER_name,email AS DB_USER_email,
                    products.product_name, products.product_cost,
                    purchases.mpesa_number
             FROM purchases
-            JOIN users ON purchases.user_id = users.id
+            JOIN DB_USERs ON purchases.DB_USER_id = DB_USERs.id
             JOIN products ON purchases.product_id =products.product_id
         """
         cursor.execute(query)
@@ -466,55 +466,56 @@ def view_purchases():
 
 
 @app.route('/view_users')
-def view_users():
+def view_DB_USERs():
     page = request.args.get('page', 1, type=int)
-    per_page = 10  # Number of users per page
+    per_page = 10  # Number of DB_USERs per page
     offset = (page - 1) * per_page
 
-    connection = pymysql.connect(host=os.getenv("DB_HOST"),
-                                user=os.getenv("DB_USER"), password='',
+    connection = pymysql.connect(DB_HOST=os.getenv("DB_DB_HOST"),
+                                DB_USER=os.getenv("DB_DB_USER"), 
+                                DB_PASSWORD='os.getenv("DB_DB_PASSWORD")',
                                 cursorclass=pymysql.cursors.DictCursor ,
-                                database=os.getenv("DB_NAME"))
+                               DB_NAME=os.getenv("DB_NAME"))
 
     with connection.cursor() as cursor:
-        # Fetch users with pagination, including id, username, email, and phone
-        cursor.execute("SELECT id, username, email, phone FROM users LIMIT %s OFFSET %s", (per_page, offset))
-        users = cursor.fetchall()
+        # Fetch DB_USERs with pagination, including id, DB_USERname, email, and phone
+        cursor.execute("SELECT id, DB_USERname, email, phone FROM DB_USERs LIMIT %s OFFSET %s", (per_page, offset))
+        DB_USERs = cursor.fetchall()
 
-        # Get total user count for pagination calculation
-        cursor.execute("SELECT COUNT(*) AS total FROM users")
-        total_users = cursor.fetchone()['total']
+        # Get total DB_USER count for pagination calculation
+        cursor.execute("SELECT COUNT(*) AS total FROM DB_USERs")
+        total_DB_USERs = cursor.fetchone()['total']
     connection.close()
 
     # Calculate total pages
-    total_pages = (total_users + per_page - 1) // per_page
+    total_pages = (total_DB_USERs + per_page - 1) // per_page
 
-    # Render the view_users template
-    return render_template('view_users.html', users=users, page=page, total_pages=total_pages)
+    # Render the view_DB_USERs template
+    return render_template('view_DB_USERs.html', DB_USERs=DB_USERs, page=page, total_pages=total_pages)
 
 
-@app.route('/delete_user/<int:user_id>', methods=['POST'])
-def delete_user(user_id):
-    connection=pymysql.connect(host=os.getenv("DB_HOST"),user=os.getenv("DB_USER"),password=os.getenv("DB_PASSWORD"),database=os.getenv("DB_NAME"))
+@app.route('/delete_DB_USER/<int:DB_USER_id>', methods=['POST'])
+def delete_DB_USER(DB_USER_id):
+    connection=pymysql.connect(DB_HOST=os.getenv("DB_DB_HOST"),DB_USER=os.getenv("DB_DB_USER"),DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),database=os.getenv("DB_NAME"))
 
     try:
         with connection.cursor() as cursor:
-            # Delete the user with the specified ID
-            cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
+            # Delete the DB_USER with the specified ID
+            cursor.execute("DELETE FROM DB_USERs WHERE id = %s", (DB_USER_id,))
             connection.commit()
-            flash("User has been successfully deleted.", "success")
+            flash("DB_USER has been successfully deleted.", "success")
     except pymysql.MySQLError as e:
         print(f"Error: {e}")
-        flash("An error occurred while trying to delete the user.", "error")
+        flash("An error occurred while trying to delete the DB_USER.", "error")
     finally:
         connection.close()
     
-    return redirect(url_for('view_users'))
+    return redirect(url_for('view_DB_USERs'))
 
 
 @app.route('/daily_sales')
 def daily_sales():
-    connection=pymysql.connect(host=os.getenv("DB_HOST"),user=os.getenv("DB_USER"),password=os.getenv("DB_PASSWORD"),database=os.getenv("DB_NAME"))
+    connection=pymysql.connect(DB_HOST=os.getenv("DB_DB_HOST"),DB_USER=os.getenv("DB_DB_USER"),DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),database=os.getenv("DB_NAME"))
 
     current_date = datetime.now().date()  # Get today's date
 
@@ -540,10 +541,10 @@ def daily_sales():
 @app.route('/view_stock')
 def view_stock():
     connection = pymysql.connect(
-        host=os.getenv("DB_HOST"),
-        user=os.getenv("DB_USER"),
-        password='',
-        database=os.getenv("DB_NAME"),
+        DB_HOST=os.getenv("DB_DB_HOST"),
+        DB_USER=os.getenv("DB_DB_USER"),
+        DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),
+       DB_NAME=os.getenv("DB_NAME"),
         cursorclass=pymysql.cursors.DictCursor
     )
 
