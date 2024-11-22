@@ -29,7 +29,7 @@ def Homepage():
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
      
  sql="select * from products WHERE product_category = 'cups' "
@@ -72,7 +72,7 @@ def singleitem(product_id):
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
 # create sql query 
      sql= " select * from products where product_id = %s "
@@ -102,7 +102,7 @@ def Upload():
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
         cursor=connection.cursor()
 
@@ -128,7 +128,7 @@ def decor():
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
     sql="select * from products WHERE product_category = 'curtains' "
     sql1="select * from products WHERE product_category = 'carpets' "
@@ -158,7 +158,7 @@ def decor():
 
 #  fetch  all the phones rows
 
-    curtains=cursor.fetchall()
+    curtains=cursor.fetchall()Y
 # fetch all monitors 
     carpets=cursor1.fetchall()
     doormats=cursor2.fetchall()
@@ -186,7 +186,7 @@ def Uploaddecor():
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
         cursor=connection.cursor()
 
@@ -227,7 +227,7 @@ def register():
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
 
         cursor = connection.cursor()
@@ -264,7 +264,7 @@ def admin():
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
     cursor = connection.cursor()
 
@@ -295,7 +295,7 @@ def Login():
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
         cursor=connection.cursor()
 #  check if user with email exist in the db 
@@ -342,7 +342,7 @@ def get_products_by_category(category):
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
     
     try:
@@ -379,7 +379,7 @@ def search():
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
     
     try:
@@ -413,7 +413,7 @@ def view_products():
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
 
     with connection.cursor() as cursor:
@@ -441,7 +441,7 @@ def delete_product(product_id):
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
 
     with connection.cursor() as cursor:
@@ -471,7 +471,7 @@ def restore_product(product_id):
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
 
     with connection.cursor() as cursor:
@@ -506,7 +506,7 @@ def view_purchases():
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
 
     with connection.cursor() as cursor:
@@ -538,7 +538,7 @@ def view_users():
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
 
     with connection.cursor() as cursor:
@@ -565,7 +565,7 @@ def delete_user(user_id):
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
 
     try:
@@ -590,7 +590,7 @@ def daily_sales():
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
 
     current_date = datetime.now().date()  # Get today's date
@@ -621,7 +621,7 @@ def view_stock():
      user=os.getenv('DB_USER'),
      password=os.getenv('DB_PASSWORD'),
      database=os.getenv('DB_NAME'),
-     connect_timeout=10
+    
      )
 
     
