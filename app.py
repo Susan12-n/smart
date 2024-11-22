@@ -2,7 +2,7 @@ from flask import*
 import pymysql
 from functions import *
 from mpesa import *
-from werkzeug.security import generate_DB_PASSWORD_hash
+from werkzeug.security import generate_password_hash
 import os
 from datetime import datetime
 
@@ -186,14 +186,14 @@ def About():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        DB_USERname = request.form['DB_USERname']
+        username = request.form['username']
         email = request.form['email']
         gender = request.form['gender']
         phone = request.form['phone']
-        DB_PASSWORD = request.form['DB_PASSWORD']
+        password = request.form['password']
         
-        # Hash the DB_PASSWORD for security
-        hashed_DB_PASSWORD = generate_DB_PASSWORD_hash(DB_PASSWORD)
+         # Hash the password for security
+        hashed_password = generate_password_hash(password)
 
         #DB_NAME connection
         connection = pymysql.connect(DB_HOST=os.getenv("DB_DB_HOST"), DB_USER=os.getenv("DB_DB_USER"), DB_PASSWORD=os.getenv("DB_DB_PASSWORD"),DB_NAME=os.getenv("DB_NAME"))
@@ -208,8 +208,8 @@ def register():
             return render_template("register.html", error="Email is already in use. Please use a different email.")
 
         # Insert new DB_USER record
-        sql = "INSERT INTO DB_USERs (DB_USERname, email, gender, phone, DB_PASSWORD) VALUES (%s, %s, %s, %s, %s)"
-        data = (DB_USERname, email, gender, phone, hashed_DB_PASSWORD)
+        sql = "INSERT INTO DB_USERs (username, email, gender, phone, DB_PASSWORD) VALUES (%s, %s, %s, %s, %s)"
+        data = (username, email, gender, phone,hashed_password )
 
         # Execute and commit changes
         cursor.execute(sql, data)
